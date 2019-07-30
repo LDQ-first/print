@@ -1,5 +1,6 @@
 body {
     background: cornsilk;
+    margin: 10px;
 }
 
 .btn {
@@ -9,4 +10,5 @@ body {
 .img {
     width: 300px;
     display: block;
+    margin: 10px 0;
 }
