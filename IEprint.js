@@ -38,7 +38,8 @@ function pagesetup_null() {
     hkey_key = 'footer'
     RegWsh.RegWrite(hkey_root + hkey_path + hkey_key, '')
   } catch (e) {
-    alert('错误：', e)
+    alert('错误：', e.message)
+    console.log('错误：', e)
   }
 }
 
