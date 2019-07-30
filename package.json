@@ -1,0 +1,20 @@
+{
+  "name": "print",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "git": "git add . && git commit -m \"modify\" && git push "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LDQ-first/print.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LDQ-first/print/issues"
+  },
+  "homepage": "https://github.com/LDQ-first/print#readme"
+}

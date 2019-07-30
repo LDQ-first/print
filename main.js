@@ -50,51 +50,38 @@ var printFun = function () {
     var wind = window.open(window.location.href, 'newwindow', '')
     var printContent = document.getElementsByClassName('print')[0] // 获取要打印区域
 
-    // console.log('printContent: ', printContent)
-    
-    // console.log('wind.document: ', wind.document)
-    // console.log('wind.document.body: ', wind.document.body)
-
-    // console.log('wind.document.readyState: ', wind.document.readyState)
-
-    /* if(isIE()) {
-        // console.log('wind: ', wind)
-        console.log('wind.document.body: ', wind.document.body)
-        wind.document.body.innerHTML = ''
-    } */
     
     /**
      * 打印函数 printContentFun
      * 
      */
     var printContentFun = function () {
-        console.log('wind.document.readyState: ', wind.document.readyState)
+        // console.log('wind.document.readyState: ', wind.document.readyState)
+
         // wind.document.body.innerHTML = printContent
- 
         // wind.document.body.innerHTML = ''
         // var newNode = wind.document.importNode(printContent, true)
         // wind.document.body.appendChild(newNode)
         // console.log('printContentFun wind.document.body: ', wind.document.body)
         // wind.print()    
+
         var printContentClone = printContent.cloneNode(true) // 克隆要打印区域节点
-        console.log('printContentClone: ', printContentClone)
-        console.log('wind.document.body: ', wind.document.body)
-        console.log('wind.document.body.innerHTML: ', wind.document.body.innerHTML)
+
+        // console.log('printContentClone: ', printContentClone)
+        // console.log('wind.document.body: ', wind.document.body)
+        // console.log('wind.document.body.innerHTML: ', wind.document.body.innerHTML)
+        // console.log('wind.document.body: ', wind.document.body)
+
+        wind.document.body.innerHTML = ''  // 清空 wind.document.body
         
-        wind.document.body.innerHTML = ''
-        
-        console.log('wind.document.body: ', wind.document.body)
-        /* if(!isIE()) {
-            wind.document.body.innerHTML = ''
-        } */
             
         try {
             if(!isIE()) {
                 console.log('It is not IE')
-                wind.document.body.appendChild(printContentClone)
+                wind.document.body.appendChild(printContentClone)     // 非IE 插入要打印区域克隆节点
             } else {
-                console.log('printContentClone.outerHTML: ', printContentClone.outerHTML)
-                wind.document.body.innerHTML = printContentClone.outerHTML
+                // console.log('printContentClone.outerHTML: ', printContentClone.outerHTML)
+                wind.document.body.innerHTML = printContentClone.outerHTML  // IE 插入要打印区域克隆节点的outerHTML
             }
         } catch (e) {
             // IE错误 Automation 服务器不能创建对象 解决方法
@@ -103,8 +90,14 @@ var printFun = function () {
             console.log('e: ', e)
         }
     
-        console.log('printContentFun wind.document.body: ', wind.document.body)
-        wind.print()
+        // console.log('printContentFun wind.document.body: ', wind.document.body)
+        // console.log('wind.document.readyState: ', wind.document.readyState)
+
+        wind.print()    
+
+        if(isIE() && wind.document.readyState === 'complete') {       // IE 打印结束 关闭窗口
+            wind.close()
+        }
     } 
 
     /* if (wind.document.readyState === 'interactive') {
@@ -116,26 +109,50 @@ var printFun = function () {
     if(!isIE()) {
         console.log('It is not IE')
         wind.addEventListener('DOMContentLoaded', function () {
-            console.log('wind.document.readyState: ', wind.document.readyState)
+            // console.log('wind.document.readyState: ', wind.document.readyState)
             printContentFun()
         })
+        close()                // 非IE 打印结束 关闭窗口
         // wind.close()
     } else {
-        wind.onload = function() {
-            printContentFun()
-           /*  console.log('wind.document.readyState: ', wind.document.readyState)
+       /*  wind.onload = function() {
+            console.log('wind.document.readyState: ', wind.document.readyState)
             if (wind.document.readyState === 'interactive') {
                 printContentFun()
-            } */
-        }
+            }
+        } */
+       /*  var interval = setInterval(function(){
+          console.log('wind.document.readyState: ', wind.document.readyState)
+          if (wind.document.readyState != 'loading') {
+              printContentFun()
+              clearInterval(interval)
+          }
+        }, 0) */
+        /**
+         * setTimeout模拟setInterval
+         * 当 wind.document.readyState 不再是 loading 时打印
+         * 
+         */
+        var timeout = setTimeout(function IEprint(){
+          // console.log('wind.document.readyState: ', wind.document.readyState)
+          if (wind.document.readyState != 'loading') {
+              printContentFun()
+              clearTimeout(timeout)
+          } else {
+            setTimeout(IEprint, 0)
+          }
+        }, 0)
+        
     }
 
-    /* function close() {
-        wind.onload = function () {
-            wind.close()
+    function close() {
+        console.log('close')
+        wind.onload = function() {
+          wind.close()
         }
-    } */
+    }
     
+  
 }
 
 
