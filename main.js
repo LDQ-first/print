@@ -94,6 +94,7 @@ var printFun = function () {
         // console.log('wind.document.readyState: ', wind.document.readyState)
 
         wind.print()    
+        console.log('print')
 
         if(isIE() && wind.document.readyState === 'complete') {       // IE 打印结束 关闭窗口
             wind.close()
@@ -146,13 +147,20 @@ var printFun = function () {
     }
 
     function close() {
-        console.log('close')
-        wind.onload = function() {
-          wind.close()
+        /* wind.onload = function() {
+            wind.close()
+            console.log('onload')
+        } */
+        wind.onbeforeprint = function() {
+            console.log('onbeforeprint')
         }
+        wind.onafterprint = function() {
+            console.log('onafterprint')
+            wind.close()
+            console.log('close')
+        }   
     }
     
-  
 }
 
 

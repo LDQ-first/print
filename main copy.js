@@ -87,10 +87,11 @@ var printFun = function () {
     }
 
     function close() {
-        console.log('close')
-        wind.onload = function() {
-          wind.close()
-        }
+        wind.onafterprint = function() {
+            console.log('onafterprint')
+            wind.close()
+            console.log('close')
+        }   
     }
     
   
