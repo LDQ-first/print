@@ -13,7 +13,7 @@ function isIE() {
 
 
 var btn = document.getElementsByClassName('btn')[0]
-
+var execCommandPrint
 
 /**
  * 打印控制函数 printFun
@@ -94,7 +94,7 @@ var printFun = function () {
         // console.log('wind.document.readyState: ', wind.document.readyState)
 
         // wind.print()    
-        var execCommandPrint = wind.document.execCommand("print")
+        execCommandPrint = wind.document.execCommand("print")
         console.log('wind.document.execCommand("print"): ', execCommandPrint)
         console.log('print')
 
@@ -161,6 +161,10 @@ var printFun = function () {
             console.log('onafterprint')
             /* console.log('document.execCommand("print"): ', document.execCommand("print")) */
             // setTimeout(wind.close(), 3000)
+            console.log('wind.document.execCommand("print"): ', execCommandPrint)
+            if(execCommandPrint) {
+                wind.close()
+            }
             console.log('close')
         }   
     }
