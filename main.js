@@ -93,7 +93,9 @@ var printFun = function () {
         // console.log('printContentFun wind.document.body: ', wind.document.body)
         // console.log('wind.document.readyState: ', wind.document.readyState)
 
-        wind.print()    
+        // wind.print()    
+        var execCommandPrint = wind.document.execCommand("print")
+        console.log('wind.document.execCommand("print"): ', execCommandPrint)
         console.log('print')
 
         if(isIE() && wind.document.readyState === 'complete') {       // IE 打印结束 关闭窗口
@@ -113,7 +115,8 @@ var printFun = function () {
             // console.log('wind.document.readyState: ', wind.document.readyState)
             printContentFun()
         })
-        close()                // 非IE 打印结束 关闭窗口
+        close()
+        // setTimeout(close(), 1000)                // 非IE 打印结束 关闭窗口
         // wind.close()
     } else {
        /*  wind.onload = function() {
@@ -156,7 +159,8 @@ var printFun = function () {
         }
         wind.onafterprint = function() {
             console.log('onafterprint')
-            wind.close()
+            /* console.log('document.execCommand("print"): ', document.execCommand("print")) */
+            // setTimeout(wind.close(), 3000)
             console.log('close')
         }   
     }
